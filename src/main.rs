@@ -21,8 +21,8 @@ impl EventHandler for Handler {
             }
         }
 
-        let random_chance = rand::thread_rng().gen_range(0..10);
-        if random_chance != 5 {
+        let random_chance = rand::thread_rng().gen_range(0..15);
+        if random_chance == 5 {
                 if let Err(why) = msg.react(&ctx.http, '⚽').await {
                 println!("Failed to send message: {why:?}");
             }
