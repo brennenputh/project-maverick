@@ -12,8 +12,17 @@ impl EventHandler for Handler {
             return;
         }
 
-        if msg.content.to_ascii_lowercase().contains("sport") {
-            let messages = vec!["Ball", "Soccer", "Sport", "Goal", "Touchdown"];
+        let msg_lc = msg.content.to_ascii_lowercase();
+        if msg_lc.contains("sport") || msg_lc.contains("maverick") {
+            let mut messages = vec!["Ball", "Soccer", "Sport", "Goal", "Touchdown",
+                "Athletics!", "Champion", "Compete", "Dart", "Dive", "Exercise",
+                "Fitness", "Football", "Free throw", "Game", "Guard", "Home run",
+                "Hole-in-one", "Halftime", "Jump", "Medal", "Loser"];
+            if msg.author.id.get() == 302116717184679938 {
+                messages.push("That's not right");
+                messages.push("Correct");
+            }
+
             let random_idx = rand::thread_rng().gen_range(0..messages.len());
             let message = messages.get(random_idx).unwrap().to_string();
             if let Err(why) = msg.channel_id.say(&ctx.http, message).await {
@@ -23,7 +32,7 @@ impl EventHandler for Handler {
 
         let random_chance = rand::thread_rng().gen_range(0..15);
         if random_chance == 5 {
-                if let Err(why) = msg.react(&ctx.http, '⚽').await {
+            if let Err(why) = msg.react(&ctx.http, '⚽').await {
                 println!("Failed to send message: {why:?}");
             }
         }
